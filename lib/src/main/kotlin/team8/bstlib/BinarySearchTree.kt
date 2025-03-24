@@ -7,6 +7,6 @@ sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, 
     val values: MutableList<V> = mutableListOf(rootValue)
 
     abstract fun insert(key: K, value: V): N?
-    abstract fun remove(key: K, value: V): N?
-    abstract fun find(key: K, value: V): N?
+    abstract fun remove(key: K): N?
+    abstract fun find(key: K): N?
 }
