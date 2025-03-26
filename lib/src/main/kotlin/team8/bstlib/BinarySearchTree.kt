@@ -1,7 +1,7 @@
 package team8.bstlib
 
 sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, V, N>>(rootKey: K, rootValue: V) {
-    protected abstract val root: N
+    protected abstract val root: N?
 
     val keys: MutableList<K> = mutableListOf(rootKey)
     val values: MutableList<V> = mutableListOf(rootValue)
