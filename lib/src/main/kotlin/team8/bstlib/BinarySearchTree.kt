@@ -8,5 +8,14 @@ sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, 
 
     abstract fun insert(key: K, value: V): N?
     abstract fun remove(key: K): N?
-    abstract fun find(key: K): N?
+    fun find(key: K): N? {
+        fun recursiveFind(currentNode: N?): N? {
+            if (currentNode == null || currentNode.key == key) return currentNode
+            return if (currentNode.key < key)
+                recursiveFind(currentNode.leftChild)
+            else
+                recursiveFind(currentNode.rightChild)
+        }
+        return recursiveFind(root)
+    }
 }
