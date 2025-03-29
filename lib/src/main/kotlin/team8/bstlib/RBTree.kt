@@ -93,6 +93,37 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return
     }
 
-    override fun insert(key: K, value: V): RBTreeNode<K, V>? = TODO()
+    override fun insert(key: K, value: V): RBTreeNode<K, V>? {
+        val insertableNode = RBTreeNode(Color.RED, key, value)
+        var currentNode = root
+        var previousNode: RBTreeNode<K, V>? = null
+
+        while (currentNode != null) {
+            previousNode = currentNode
+            currentNode = if (currentNode.key < key)
+                currentNode.leftChild
+            else if (currentNode.key == key)
+                return null //node already exists
+            else
+                currentNode.rightChild
+        }
+
+        //either root was modified or previousNode wasn't
+        if (root == null || previousNode == null) {
+            root = insertableNode
+            balanceInsertion(root)
+            return insertableNode
+        }
+
+        insertableNode.parent = previousNode
+        if (previousNode.key < key)
+            previousNode.rightChild = insertableNode
+        else
+            previousNode.leftChild = insertableNode
+
+        balanceInsertion(insertableNode)
+        return insertableNode
+    }
+
     override fun remove(key: K): RBTreeNode<K, V>? = TODO()
 }
