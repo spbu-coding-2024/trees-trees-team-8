@@ -21,6 +21,23 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return
     }
 
+    private fun rotateRight(node: RBTreeNode<K, V>) {
+        val substitutionNode = node.leftChild ?: return
+        substitutionNode.parent = node.parent
+        if (node.parent?.leftChild == node)
+            node.parent?.leftChild = substitutionNode
+        else
+            node.parent?.rightChild = substitutionNode
+
+        node.leftChild = substitutionNode.rightChild
+        substitutionNode.rightChild?.parent = node
+
+        node.parent = substitutionNode
+        substitutionNode.rightChild = node
+
+        return
+    }
+
     override fun insert(key: K, value: V): RBTreeNode<K, V>? = TODO()
     override fun remove(key: K): RBTreeNode<K, V>? = TODO()
 }
