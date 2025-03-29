@@ -4,7 +4,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
     BinarySearchTree<K, V, RBTreeNode<K, V>>(rootKey, rootValue) {
     override var root: RBTreeNode<K, V>? = RBTreeNode(Color.BLACK, rootKey, rootValue)
 
-    private fun rotateLeft(node: RBTreeNode<K, V>) {
+    private fun rotateLeft(node: RBTreeNode<K, V>?) {
+        if (node == null) return
         val substitutionNode = node.rightChild ?: return
         substitutionNode.parent = node.parent
         if (node.parent?.leftChild == node)
@@ -21,7 +22,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return
     }
 
-    private fun rotateRight(node: RBTreeNode<K, V>) {
+    private fun rotateRight(node: RBTreeNode<K, V>?) {
+        if (node == null) return
         val substitutionNode = node.leftChild ?: return
         substitutionNode.parent = node.parent
         if (node.parent?.leftChild == node)
