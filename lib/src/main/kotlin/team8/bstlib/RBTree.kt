@@ -112,7 +112,9 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         if (root == null || previousNode == null) {
             root = insertableNode
             balanceInsertion(root)
-            return insertableNode
+            root?.key?.let { keys.add(it) }
+            root?.value?.let { values.add(it) }
+            return root
         }
 
         insertableNode.parent = previousNode
@@ -122,6 +124,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
             previousNode.leftChild = insertableNode
 
         balanceInsertion(insertableNode)
+        keys.add(insertableNode.key)
+        values.add(insertableNode.value)
         return insertableNode
     }
 
