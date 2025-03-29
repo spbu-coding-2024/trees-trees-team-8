@@ -4,4 +4,20 @@ sealed class BinarySearchTreeNode<K : Comparable<K>, V, N : BinarySearchTreeNode
     var leftChild: N? = null
     var rightChild: N? = null
     var parent: N? = null
+
+    fun findMin(): N {
+        return if (leftChild == null) {
+            this as N
+        } else {
+            leftChild!!.findMin()
+        }
+    }
+
+    fun findMax(): N {
+        return if (rightChild == null) {
+            this as N
+        } else {
+            rightChild!!.findMax()
+        }
+    }
 }
