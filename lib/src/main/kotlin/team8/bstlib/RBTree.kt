@@ -40,6 +40,59 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return
     }
 
+    private fun balanceInsertion(insertedNode: RBTreeNode<K, V>?) {
+        if (insertedNode == null) return
+        var node = insertedNode
+        if (node == root) {
+            root?.color = Color.BLACK
+            return
+        }
+        while (node?.parent?.color == Color.RED) {
+            //parent is left child
+            if (node.parent == node.parent?.parent?.leftChild) {
+                //uncle is red
+                if (node.parent?.parent?.rightChild?.color == Color.RED) {
+                    node.parent?.color = Color.BLACK
+                    node.parent?.parent?.rightChild?.color = Color.BLACK
+                    node.parent?.parent?.color = Color.RED
+                    node = node.parent?.parent
+                }
+                //uncle is black or does not exist
+                else {
+                    if (node == node.parent?.rightChild) {
+                        node = node.parent
+                        rotateLeft(node)
+                    }
+                    node?.parent?.color = Color.BLACK
+                    node?.parent?.parent?.color = Color.RED
+                    rotateRight(node?.parent?.parent)
+                }
+            }
+            //parent is right child
+            else {
+                //uncle is red
+                if (node.parent?.parent?.rightChild?.color == Color.RED) {
+                    node.parent?.color = Color.BLACK
+                    node.parent?.parent?.rightChild?.color = Color.BLACK
+                    node.parent?.parent?.color = Color.RED
+                    node = node.parent?.parent
+                }
+                //uncle is black or does not exist
+                else {
+                    if (node == node.parent?.leftChild) {
+                        node = node.parent
+                        rotateLeft(node)
+                    }
+                    node?.parent?.color = Color.BLACK
+                    node?.parent?.parent?.color = Color.RED
+                    rotateLeft(node?.parent?.parent)
+                }
+            }
+        }
+        root?.color = Color.BLACK
+        return
+    }
+
     override fun insert(key: K, value: V): RBTreeNode<K, V>? = TODO()
     override fun remove(key: K): RBTreeNode<K, V>? = TODO()
 }
