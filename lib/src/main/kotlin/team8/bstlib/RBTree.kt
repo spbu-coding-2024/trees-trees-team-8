@@ -101,11 +101,11 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         while (currentNode != null) {
             previousNode = currentNode
             currentNode = if (currentNode.key < key)
-                currentNode.leftChild
+                currentNode.rightChild
             else if (currentNode.key == key)
                 return null //node already exists
             else
-                currentNode.rightChild
+                currentNode.leftChild
         }
 
         //either root was modified or previousNode wasn't
