@@ -46,7 +46,8 @@ sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, 
             return if (currentNode.key < key)
                 recursiveFind(currentNode.rightChild)
             else
-                recursiveFind(currentNode.leftChild)        }
+                recursiveFind(currentNode.leftChild)
+        }
         return recursiveFind(root)
     }
 
