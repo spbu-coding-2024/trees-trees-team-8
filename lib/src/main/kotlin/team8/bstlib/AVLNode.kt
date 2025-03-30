@@ -4,7 +4,7 @@ class AVLNode<K : Comparable<K>, V>(
     key: K,
     value: V
 ) : BinarySearchTreeNode<K, V, AVLNode<K, V>>(key, value) {
-    var height: Int = 1
+    private var height: Int = 1
 
     // Обновляет высоту узла на основе высот потомков
     fun updateHeight() {
