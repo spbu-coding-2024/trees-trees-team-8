@@ -128,5 +128,60 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return insertableNode
     }
 
-    override fun remove(key: K): RBTreeNode<K, V>? = TODO()
+    override fun remove(key: K): RBTreeNode<K, V>? {
+        //TODO: refactor
+        val removableNode = find(key) ?: return null
+        //no children
+        if (removableNode.rightChild == null && removableNode.leftChild == null) {
+            if (removableNode == root)
+                root = null
+            else {
+                if (removableNode == removableNode.parent?.leftChild)
+                    removableNode.parent?.leftChild = null
+                else
+                    removableNode.parent?.rightChild = null
+            }
+            return removableNode
+        }
+        //one child
+        if (removableNode.rightChild != null && removableNode.leftChild == null) {
+            if (removableNode == removableNode.parent?.leftChild)
+                removableNode.parent?.leftChild = removableNode.rightChild
+            else
+                removableNode.parent?.rightChild = removableNode.rightChild
+
+            return removableNode
+        }
+        if (removableNode.rightChild == null) {
+            if (removableNode == removableNode.parent?.leftChild)
+                removableNode.parent?.leftChild = removableNode.leftChild
+            else
+                removableNode.parent?.rightChild = removableNode.leftChild
+
+            return removableNode
+        }
+        //both children
+        val replaceNode = getMinimum(removableNode.rightChild) //get minimum from right subtree
+        if (replaceNode?.rightChild != null) {
+            replaceNode.rightChild?.parent = replaceNode.parent
+        }
+        if (replaceNode == root)
+            root = replaceNode?.rightChild
+        else
+            replaceNode?.parent?.leftChild = replaceNode?.rightChild
+
+        if (removableNode != replaceNode) {
+            replaceNode?.color = removableNode.color
+            replaceNode?.rightChild = removableNode.rightChild
+            replaceNode?.leftChild = removableNode.leftChild
+            if (removableNode == removableNode.parent?.leftChild)
+                removableNode.parent?.leftChild = replaceNode
+            else
+                removableNode.parent?.rightChild = replaceNode
+        }
+        if (replaceNode?.color == Color.BLACK) {
+            balanceRemoval(replaceNode)
+        }
+        return removableNode
+    }
 }
