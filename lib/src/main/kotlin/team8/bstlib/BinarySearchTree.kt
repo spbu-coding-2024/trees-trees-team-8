@@ -20,4 +20,10 @@ sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, 
                 recursiveFind(currentNode.leftChild)        }
         return recursiveFind(root)
     }
+
+    protected fun getMinimum(node: N?): N? =
+        if (node?.leftChild == null) node else getMinimum(node.leftChild)
+
+    protected fun getMaximum(node: N?): N? =
+        if (node?.rightChild == null) node else getMaximum(node.rightChild)
 }
