@@ -93,6 +93,41 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         return
     }
 
+    private fun balanceRemoval(removedNodeChild: RBTreeNode<K, V>?) {
+        if (removedNodeChild == null) return
+        var node = removedNodeChild
+        while (node?.color == Color.BLACK && node != root) {
+            if (node.parent?.rightChild?.color == Color.RED) {
+                node.parent?.rightChild?.color = Color.BLACK
+                node.parent?.color = Color.RED
+                rotateLeft(node.parent)
+            }
+            //brother has black children
+            if (node.parent?.leftChild?.color == Color.BLACK &&
+                node.parent?.rightChild?.rightChild?.color == Color.BLACK
+            ) {
+                node.parent?.rightChild?.color = Color.RED
+            }
+            //brother has one black child
+            else {
+                if (node.parent?.rightChild?.rightChild?.color == Color.BLACK) {
+                    node.parent?.rightChild?.leftChild?.color = Color.RED
+                    node.parent?.color = Color.RED
+                    rotateRight(node.parent?.rightChild)
+                } else {
+                    val parentColor = node.parent?.color
+                    if (parentColor != null) node.parent?.rightChild?.color = parentColor
+                    node.parent?.color = Color.BLACK
+                    node.parent?.rightChild?.rightChild?.color = Color.BLACK
+                    rotateLeft(node.parent)
+                    node = root
+                }
+            }
+        }
+        node?.color = Color.BLACK
+        root?.color = Color.BLACK
+    }
+
     override fun insert(key: K, value: V): RBTreeNode<K, V>? {
         val insertableNode = RBTreeNode(Color.RED, key, value)
         var currentNode = root
