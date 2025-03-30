@@ -105,4 +105,30 @@ class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree
         node.updateHeight()
         return node.parent!!.apply { updateHeight() }
     }
+    
+    private fun handleNodeDeletion(node: AVLNode<K, V>): AVLNode<K, V>? {
+        return when {
+            // У узла нет левого ребёнка
+            node.leftChild == null -> node.rightChild?.apply {
+                parent = node.parent
+            }
+            // У узла нет правого ребёнка
+            node.rightChild == null -> node.leftChild?.apply {
+                parent = node.parent
+            }
+            // У узла есть оба ребёнка
+            else -> {
+                // Ищем минимальный узел в правом поддереве
+                val successor = getMinimum(node.rightChild)!!
+                // Удаляем преемника из правого поддерева
+                node.rightChild = removeRecursive(node.rightChild, successor.key)
+                // Заменяем удаляемый узел на преемника
+                successor.parent = node.parent
+                successor.leftChild = node.leftChild
+                successor.rightChild = node.rightChild
+                successor.updateHeight()
+                successor
+            }
+        }
+    }
 }
