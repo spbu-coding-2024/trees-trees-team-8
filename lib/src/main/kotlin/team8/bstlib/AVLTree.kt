@@ -5,6 +5,10 @@ class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree
     // Корень дерева (переопределяем из родительского класса)
     override var root: AVLNode<K, V>? = AVLNode(rootKey, rootValue)
 
+    fun getHeight(key: K): Int? {
+        return find(key)?.getHeight()
+    }
+
     // Добавление элемента в дерево
     override fun insert(key: K, value: V): AVLNode<K, V>? {
         if (find(key) != null) return null // Проверка на дубликат
