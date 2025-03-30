@@ -64,4 +64,45 @@ class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree
         node.updateHeight()
         return balance(node)
     }
+
+    // Проверка баланса узла
+    private fun balance(node: AVLNode<K, V>): AVLNode<K, V> {
+        return when (node.balanceFactor()) {
+            2 -> handleLeftHeavy(node)  // Левое поддерево выше
+            -2 -> handleRightHeavy(node) // Правое поддерево выше
+            else -> node // Баланс в норме
+        }
+    }
+
+    // Балансировка для левого перевеса
+    private fun handleLeftHeavy(node: AVLNode<K, V>): AVLNode<K, V> {
+        // Если левый ребёнок имеет правый перевес
+        if (node.leftChild!!.balanceFactor() < 0) {
+            node.leftChild = rotateLeft(node.leftChild!!)
+        }
+        return rotateRight(node)
+    }
+
+    // Балансировка для правого перевеса
+    private fun handleRightHeavy(node: AVLNode<K, V>): AVLNode<K, V> {
+        // Если правый ребёнок имеет левый перевес
+        if (node.rightChild!!.balanceFactor() > 0) {
+            node.rightChild = rotateRight(node.rightChild!!)
+        }
+        return rotateLeft(node)
+    }
+
+    // Левый поворот
+    private fun rotateLeft(node: AVLNode<K, V>): AVLNode<K, V> {
+        super.rotateLeft(node) // Используем реализацию из BST
+        node.updateHeight()
+        return node.parent!!.apply { updateHeight() }
+    }
+
+    // Правый поворот
+    private fun rotateRight(node: AVLNode<K, V>): AVLNode<K, V> {
+        super.rotateRight(node) // Используем реализацию из BST
+        node.updateHeight()
+        return node.parent!!.apply { updateHeight() }
+    }
 }
