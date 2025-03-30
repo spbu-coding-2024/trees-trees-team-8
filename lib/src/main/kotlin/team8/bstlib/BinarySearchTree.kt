@@ -1,10 +1,13 @@
 package team8.bstlib
 
 sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, V, N>>(rootKey: K, rootValue: V) {
-    protected abstract val root: N?
+    protected abstract var root: N?
 
     val keys: MutableList<K> = mutableListOf(rootKey)
+        private set
+
     val values: MutableList<V> = mutableListOf(rootValue)
+        private set
 
     abstract fun insert(key: K, value: V): N?
     abstract fun remove(key: K): N?
@@ -12,10 +15,9 @@ sealed class BinarySearchTree<K : Comparable<K>, V, N : BinarySearchTreeNode<K, 
         fun recursiveFind(currentNode: N?): N? {
             if (currentNode == null || currentNode.key == key) return currentNode
             return if (currentNode.key < key)
-                recursiveFind(currentNode.leftChild)
-            else
                 recursiveFind(currentNode.rightChild)
-        }
+            else
+                recursiveFind(currentNode.leftChild)        }
         return recursiveFind(root)
     }
 }
