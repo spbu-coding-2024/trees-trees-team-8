@@ -1,6 +1,5 @@
 package team8.bstlib
 
-
 class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree<K, V, AVLNode<K, V>>(rootKey, rootValue) {
 
     // Корень дерева (переопределяем из родительского класса)
@@ -105,7 +104,7 @@ class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree
         node.updateHeight()
         return node.parent!!.apply { updateHeight() }
     }
-    
+
     private fun handleNodeDeletion(node: AVLNode<K, V>): AVLNode<K, V>? {
         return when {
             // У узла нет левого ребёнка
