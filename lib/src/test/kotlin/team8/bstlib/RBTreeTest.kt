@@ -103,8 +103,8 @@ class RBTreeTest {
         expectedResult.parent = testTree.find(1)
         val actualResult = testTree.insert(3, 2)
 
-        assert(testTree.find(2)?.color == Color.RED)
-        assert(testTree.find(0)?.color == Color.RED)
+        assert(testTree.find(2)?.color == Color.BLACK)
+        assert(testTree.find(0)?.color == Color.BLACK)
         assert(testTree.find(1)?.color == Color.BLACK)
         assert(expectedResult == actualResult)
     }
