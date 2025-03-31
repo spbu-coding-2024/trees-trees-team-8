@@ -1,9 +1,6 @@
 package team8.bstlib
 
-class AVLNode<K : Comparable<K>, V>(
-    key: K,
-    value: V
-) : BinarySearchTreeNode<K, V, AVLNode<K, V>>(key, value) {
+class AVLNode<K : Comparable<K>, V>(key: K, value: V) : BinarySearchTreeNode<K, V, AVLNode<K, V>>(key, value) {
     private var height: Int = 1
 
     fun getHeight(): Int = height
