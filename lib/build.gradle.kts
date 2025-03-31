@@ -23,6 +23,9 @@ dependencies {
     testImplementation(libs.junit.jupiter)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // Use Kotlin JUnit 5 integration.
+    testImplementation(libs.kotlin.test.junit)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
