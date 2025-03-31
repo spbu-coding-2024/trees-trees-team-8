@@ -93,8 +93,8 @@ class RBTreeTest {
     }
 
     @Test
-    @DisplayName("insert when parent is red")
-    fun insertWhenParentIsRed() {
+    @DisplayName("insert when parent is red and node is right child")
+    fun insertWhenParentIsRedAndNodeIsRightChild() {
         val testTree = RBTree(1, 2)
         testTree.insert(2, 2)
         testTree.insert(0, 2)
@@ -108,5 +108,87 @@ class RBTreeTest {
         assert(testTree.find(1)?.color == Color.BLACK)
         assert(expectedResult == actualResult)
     }
+
+    @Test
+    @DisplayName("insert when parent is red node is and left child")
+    fun insertWhenParentIsRedAndNodeIsLeftChild() {
+        val testTree = RBTree(1, 2)
+        testTree.insert(2, 2)
+        testTree.insert(0, 2)
+
+        val expectedResult = RBTreeNode(Color.RED, -1, 2)
+        expectedResult.parent = testTree.find(1)
+        val actualResult = testTree.insert(-1, 2)
+
+        assert(testTree.find(2)?.color == Color.BLACK)
+        assert(testTree.find(0)?.color == Color.BLACK)
+        assert(testTree.find(1)?.color == Color.BLACK)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("insert when uncle is black node is and left child")
+    fun insertWhenUncleIsBlackAndNodeIsLeftChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(1, 2)
+        val expectedResult = RBTreeNode(Color.RED, 0, 2)
+        val actualResult = testTree.insert(0, 2)
+
+        assert(testTree.find(1)?.parent == testTree.find(10))
+        assert(testTree.find(1)?.leftChild == testTree.find(0))
+        assert(testTree.find(1)?.rightChild == testTree.find(5))
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("insert when uncle is black and node is right child")
+    fun insertWhenUncleIsBlackAndNodeIsRightChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(1, 2)
+        val expectedResult = RBTreeNode(Color.BLACK, 2, 2)
+        val actualResult = testTree.insert(2, 2)
+
+        assert(testTree.find(2)?.parent == testTree.find(10))
+        assert(testTree.find(2)?.leftChild == testTree.find(1))
+        assert(testTree.find(2)?.rightChild == testTree.find(5))
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("insert when uncle is black, parent - right, node - right")
+    fun insertWhenUncleBlackParentRightNodeRight() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(30, 2)
+        val expectedResult = RBTreeNode(Color.RED, 40, 2)
+        val actualResult = testTree.insert(40, 2)
+
+        assert(testTree.find(30)?.parent == testTree.find(10))
+        assert(testTree.find(30)?.leftChild == testTree.find(20))
+        assert(testTree.find(30)?.rightChild == testTree.find(40))
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("insert when uncle is black, parent - right, node - left")
+    fun insertWhenUncleBlackParentRightNodeLeft() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(30, 2)
+        val expectedResult = RBTreeNode(Color.BLACK, 25, 2)
+        val actualResult = testTree.insert(25, 2)
+
+        assert(testTree.find(25)?.parent == testTree.find(10))
+        assert(testTree.find(25)?.leftChild == testTree.find(20))
+        assert(testTree.find(25)?.rightChild == testTree.find(30))
+        assert(expectedResult == actualResult)
+    }
+
 
 }
