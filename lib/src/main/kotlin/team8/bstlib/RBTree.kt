@@ -35,9 +35,9 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
             //parent is right child
             else {
                 //uncle is red
-                if (node.parent?.parent?.rightChild?.color == Color.RED) {
+                if (node.parent?.parent?.leftChild?.color == Color.RED) {
                     node.parent?.color = Color.BLACK
-                    node.parent?.parent?.rightChild?.color = Color.BLACK
+                    node.parent?.parent?.leftChild?.color = Color.BLACK
                     node.parent?.parent?.color = Color.RED
                     node = node.parent?.parent
                 }
