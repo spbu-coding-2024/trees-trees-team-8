@@ -191,4 +191,51 @@ class RBTreeTest {
     }
 
 
+    //remove
+
+    //trivial cases
+    @Test
+    @DisplayName("remove in tree without root")
+    fun removeInTreeWithoutRoot() {
+        val testTree = RBTree(1, 2)
+        testTree.remove(1)
+        val expectedResult = null
+        val actualResult = testTree.remove(1)
+
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove root")
+    fun removeRoot() {
+        val testTree = RBTree(1, 2)
+        val expectedResult = testTree.find(1)
+        val actualResult = testTree.remove(1)
+
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove right root child")
+    fun removeRightRootChild() {
+        val testTree = RBTree(1, 2)
+        testTree.insert(2, 2)
+        val expectedResult = testTree.find(2)
+        val actualResult = testTree.remove(2)
+
+        assert(testTree.find(1)?.rightChild == null)
+
+    }
+
+    @Test
+    @DisplayName("remove left root child")
+    fun removeLeftRootChild() {
+        val testTree = RBTree(1, 2)
+        testTree.insert(0, 2)
+        val expectedResult = testTree.find(0)
+        val actualResult = testTree.remove(0)
+
+        assert(testTree.find(1)?.leftChild == null)
+
+    }
 }
