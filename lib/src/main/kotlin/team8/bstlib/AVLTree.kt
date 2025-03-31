@@ -6,8 +6,14 @@ class AVLTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) : BinarySearchTree
     override var root: AVLNode<K, V>? = AVLNode(rootKey, rootValue)
 
     fun getHeight(key: K): Int? {
-        return find(key)?.getHeight()
+        return find(key)?.nodeHeight
     }
+
+    fun getBalanceFactor(key: K): Int =
+        find(key)?.balanceFactor() ?: throw NoSuchElementException()
+
+    fun getTreeHeight(): Int =
+        root?.nodeHeight ?: 0
 
     // Добавление элемента в дерево
     override fun insert(key: K, value: V): AVLNode<K, V>? {
