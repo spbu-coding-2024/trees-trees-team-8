@@ -45,7 +45,7 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 else {
                     if (node == node.parent?.leftChild) {
                         node = node.parent
-                        rotateLeft(node)
+                        rotateRight(node)
                     }
                     node?.parent?.color = Color.BLACK
                     node?.parent?.parent?.color = Color.RED
