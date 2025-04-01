@@ -140,6 +140,7 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
             if (removableNode == root)
                 root = null
             else {
+                balanceRemoval(removableNode)
                 if (removableNode == removableNode.parent?.leftChild)
                     removableNode.parent?.leftChild = null
                 else
@@ -149,18 +150,24 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         }
         //one child
         if (removableNode.rightChild != null && removableNode.leftChild == null) {
-            if (removableNode == removableNode.parent?.leftChild)
+            if (removableNode == removableNode.parent?.leftChild) {
                 removableNode.parent?.leftChild = removableNode.rightChild
-            else
+                balanceRemoval(removableNode.rightChild)
+            } else {
                 removableNode.parent?.rightChild = removableNode.rightChild
+                balanceRemoval(removableNode.rightChild)
+            }
 
             return removableNode
         }
         if (removableNode.rightChild == null) {
-            if (removableNode == removableNode.parent?.leftChild)
+            if (removableNode == removableNode.parent?.leftChild) {
                 removableNode.parent?.leftChild = removableNode.leftChild
-            else
+                balanceRemoval(removableNode.leftChild)
+            } else {
                 removableNode.parent?.rightChild = removableNode.leftChild
+                balanceRemoval(removableNode.leftChild)
+            }
 
             return removableNode
         }
