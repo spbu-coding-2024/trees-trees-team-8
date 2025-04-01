@@ -241,8 +241,8 @@ class RBTreeTest {
 
     //basic cases
     @Test
-    @DisplayName("remove left black root child")
-    fun removeBlackChildWithoutChildren(){
+    @DisplayName("remove left black root child without children")
+    fun removeLeftBlackChildWithoutChildren() {
         val testTree = RBTree(1, 2)
         testTree.insert(2, 2)
         testTree.insert(0, 2)
@@ -255,6 +255,99 @@ class RBTreeTest {
         assert(testTree.find(1)?.rightChild?.color == Color.RED)
         assert(expectedResult == actualResult)
     }
+
+    @Test
+    @DisplayName("remove right black root child without children")
+    fun removeRightBlackChildWithoutChildren() {
+        val testTree = RBTree(1, 2)
+        testTree.insert(2, 2)
+        testTree.insert(0, 2)
+        testTree.find(2)?.color = Color.BLACK
+        testTree.find(0)?.color = Color.BLACK
+        val expectedResult = testTree.find(2)
+        val actualResult = testTree.remove(2)
+
+        assert(testTree.find(1)?.rightChild == null)
+        assert(testTree.find(1)?.leftChild?.color == Color.RED)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove left black root child with left child")
+    fun removeLeftBlackRootChildWithLeftChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(1, 2)
+        val expectedResult = testTree.find(5)
+        val actualResult = testTree.remove(5)
+
+        assert(testTree.find(10)?.leftChild?.color == Color.BLACK)
+        assert(testTree.find(10)?.rightChild?.color == Color.BLACK)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove left black root child with right child")
+    fun removeLeftBlackRootChildWithRightChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(6, 2)
+        val expectedResult = testTree.find(5)
+        val actualResult = testTree.remove(5)
+
+        assert(testTree.find(10)?.leftChild?.color == Color.BLACK)
+        assert(testTree.find(10)?.rightChild?.color == Color.BLACK)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove right black root child with right child")
+    fun removeRightBlackRootChildWithRightChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(30, 2)
+        val expectedResult = testTree.find(20)
+        val actualResult = testTree.remove(20)
+
+        assert(testTree.find(10)?.leftChild?.color == Color.BLACK)
+        assert(testTree.find(10)?.rightChild?.color == Color.BLACK)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove left black root child with left child")
+    fun removeRightBlackRootChildWithLeftChild() {
+        val testTree = RBTree(10, 2)
+        testTree.insert(20, 2)
+        testTree.insert(5, 2)
+        testTree.insert(15, 2)
+        val expectedResult = testTree.find(20)
+        val actualResult = testTree.remove(20)
+
+        assert(testTree.find(10)?.leftChild?.color == Color.BLACK)
+        assert(testTree.find(10)?.rightChild?.color == Color.BLACK)
+        assert(expectedResult == actualResult)
+    }
+
+    @Test
+    @DisplayName("remove root with 2 red children")
+    fun removeRootWith2RedChildren() {
+        val testTree = RBTree(1, 2)
+        testTree.insert(0, 2)
+        testTree.insert(2, 2)
+        val expectedResult = testTree.find(1)
+        val actualResult = testTree.remove(1)
+
+        assert(testTree.find(0)?.color == Color.BLACK)
+        assert(testTree.find(0)?.rightChild == null)
+        assert(testTree.find(0)?.leftChild == testTree.find(2))
+        assert(testTree.find(2)?.color == Color.RED)
+        assert(expectedResult == actualResult)
+    }
+
 
     //TODO: other basic cases
 }
