@@ -211,26 +211,37 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         val replaceNode = getMinimum(removableNode.rightChild) //get minimum from right subtree
         if (replaceNode?.rightChild != null) {
             replaceNode.rightChild?.parent = replaceNode.parent
+            if (replaceNode == replaceNode.parent?.leftChild)
+                replaceNode.parent?.leftChild = removableNode.rightChild
+            else
+                replaceNode.parent?.rightChild = removableNode.rightChild
+        } else {
+            if (replaceNode == replaceNode?.parent?.leftChild)
+                replaceNode?.parent?.leftChild = null
+            else
+                replaceNode?.parent?.rightChild = null
         }
+        val replaceNodeChild = replaceNode?.rightChild
         if (replaceNode == root)
             root = replaceNode?.rightChild
-        else
-            replaceNode?.parent?.leftChild = replaceNode?.rightChild
 
-        //swap nodes
+        //swap nodes (ugly because node key is immutable)
         if (removableNode != replaceNode) {
             replaceNode?.color = removableNode.color
             replaceNode?.rightChild = removableNode.rightChild
+            removableNode.rightChild?.parent = replaceNode
             replaceNode?.leftChild = removableNode.leftChild
+            removableNode.leftChild?.parent = replaceNode
             if (removableNode == removableNode.parent?.leftChild)
                 removableNode.parent?.leftChild = replaceNode
             else
                 removableNode.parent?.rightChild = replaceNode
 
             replaceNode?.parent = removableNode.parent
+            if (replaceNode?.parent == null) root = replaceNode
         }
         if (replaceNode?.color == Color.BLACK) {
-            balanceRemoval(removableNode.leftChild)
+            balanceRemoval(replaceNodeChild)
         }
         return removableNode
     }
