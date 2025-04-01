@@ -66,11 +66,14 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 node.parent?.color = Color.RED
                 rotateLeft(node.parent)
             }
-            //brother has black children
-            if (node.parent?.rightChild?.leftChild?.color == Color.BLACK &&
-                node.parent?.rightChild?.rightChild?.color == Color.BLACK
+            //brother has black children or does not have children at all
+            if ((node.parent?.rightChild?.leftChild?.color == Color.BLACK &&
+                        node.parent?.rightChild?.rightChild?.color == Color.BLACK) ||
+                (node.parent?.rightChild?.leftChild == null &&
+                        node.parent?.rightChild?.rightChild == null)
             ) {
                 node.parent?.rightChild?.color = Color.RED
+                node = node.parent
             }
             //brother has one black child
             else {
@@ -78,6 +81,7 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                     node.parent?.rightChild?.leftChild?.color = Color.RED
                     node.parent?.color = Color.RED
                     rotateRight(node.parent?.rightChild)
+                    node = node.parent
                 } else {
                     val parentColor = node.parent?.color
                     if (parentColor != null) node.parent?.rightChild?.color = parentColor
