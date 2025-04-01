@@ -150,9 +150,9 @@ Generate HTML docs:
 ## Team
 
 
-- [@ivanov](https://github.com/NIcolaiKl) – Project graphics, Presentation.
-- [@petrov](https://github.com/lev666) – AVL Tree implementation, BST.
-- [@sidorov](https://github.com/ivanovm-main) – Red-Black Tree logic, Core architecture, BST.
+- [@Nikolai Klevakin](https://github.com/NIcolaiKl) – Project graphics, Presentation.
+- [@Lev Beyzer](https://github.com/lev666) – AVL Tree implementation, BST.
+- [@Mikhail Ivanov](https://github.com/ivanovm-main) – Red-Black Tree logic, Core architecture, BST.
 
 
 ---
