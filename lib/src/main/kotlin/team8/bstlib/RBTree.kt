@@ -61,34 +61,70 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         if (removedNodeChild == null) return
         var node = removedNodeChild
         while (node?.color == Color.BLACK && node != root) {
-            if (node.parent?.rightChild?.color == Color.RED) {
-                node.parent?.rightChild?.color = Color.BLACK
-                node.parent?.color = Color.RED
-                rotateLeft(node.parent)
-            }
-            //brother has black children or does not have children at all
-            if ((node.parent?.rightChild?.leftChild?.color == Color.BLACK &&
-                        node.parent?.rightChild?.rightChild?.color == Color.BLACK) ||
-                (node.parent?.rightChild?.leftChild == null &&
-                        node.parent?.rightChild?.rightChild == null)
-            ) {
-                node.parent?.rightChild?.color = Color.RED
-                node = node.parent
-            }
-            //brother has one black child
-            else {
-                if (node.parent?.rightChild?.rightChild?.color == Color.BLACK) {
-                    node.parent?.rightChild?.leftChild?.color = Color.RED
+            //if node is left child
+            if (node == node.parent?.leftChild) {
+                if (node.parent?.rightChild?.color == Color.RED) {
+                    node.parent?.rightChild?.color = Color.BLACK
                     node.parent?.color = Color.RED
-                    rotateRight(node.parent?.rightChild)
-                    node = node.parent
-                } else {
-                    val parentColor = node.parent?.color
-                    if (parentColor != null) node.parent?.rightChild?.color = parentColor
-                    node.parent?.color = Color.BLACK
-                    node.parent?.rightChild?.rightChild?.color = Color.BLACK
                     rotateLeft(node.parent)
-                    node = root
+                }
+                //brother has black children or does not have children at all
+                if ((node.parent?.rightChild?.leftChild?.color == Color.BLACK &&
+                            node.parent?.rightChild?.rightChild?.color == Color.BLACK) ||
+                    (node.parent?.rightChild?.leftChild == null &&
+                            node.parent?.rightChild?.rightChild == null)
+                ) {
+                    node.parent?.rightChild?.color = Color.RED
+                    node = node.parent
+                }
+                //brother has one black child
+                else {
+                    if (node.parent?.rightChild?.rightChild?.color == Color.BLACK) {
+                        node.parent?.rightChild?.leftChild?.color = Color.RED
+                        node.parent?.color = Color.RED
+                        rotateRight(node.parent?.rightChild)
+                        node = node.parent
+                    } else {
+                        val parentColor = node.parent?.color
+                        if (parentColor != null) node.parent?.rightChild?.color = parentColor
+                        node.parent?.color = Color.BLACK
+                        node.parent?.rightChild?.rightChild?.color = Color.BLACK
+                        rotateLeft(node.parent)
+                        node = root
+                    }
+                }
+            }
+            //if node is right child
+            else {
+                if (node.parent?.leftChild?.color == Color.RED) {
+                    node.parent?.leftChild?.color = Color.BLACK
+                    node.parent?.color = Color.RED
+                    rotateRight(node.parent)
+                }
+                //brother has black children or does not have children at all
+                if ((node.parent?.leftChild?.leftChild?.color == Color.BLACK &&
+                            node.parent?.leftChild?.rightChild?.color == Color.BLACK) ||
+                    (node.parent?.leftChild?.leftChild == null &&
+                            node.parent?.leftChild?.rightChild == null)
+                ) {
+                    node.parent?.leftChild?.color = Color.RED
+                    node = node.parent
+                }
+                //brother has one black child
+                else {
+                    if (node.parent?.leftChild?.leftChild?.color == Color.BLACK) {
+                        node.parent?.leftChild?.rightChild?.color = Color.RED
+                        node.parent?.color = Color.RED
+                        rotateLeft(node.parent?.leftChild)
+                        node = node.parent
+                    } else {
+                        val parentColor = node.parent?.color
+                        if (parentColor != null) node.parent?.leftChild?.color = parentColor
+                        node.parent?.color = Color.BLACK
+                        node.parent?.leftChild?.leftChild?.color = Color.BLACK
+                        rotateRight(node.parent)
+                        node = root
+                    }
                 }
             }
         }
