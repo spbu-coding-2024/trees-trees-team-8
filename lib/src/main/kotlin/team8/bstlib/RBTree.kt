@@ -67,7 +67,7 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 rotateLeft(node.parent)
             }
             //brother has black children
-            if (node.parent?.leftChild?.color == Color.BLACK &&
+            if (node.parent?.rightChild?.leftChild?.color == Color.BLACK &&
                 node.parent?.rightChild?.rightChild?.color == Color.BLACK
             ) {
                 node.parent?.rightChild?.color = Color.RED
