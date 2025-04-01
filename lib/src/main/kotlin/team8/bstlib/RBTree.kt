@@ -217,6 +217,7 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         else
             replaceNode?.parent?.leftChild = replaceNode?.rightChild
 
+        //swap nodes
         if (removableNode != replaceNode) {
             replaceNode?.color = removableNode.color
             replaceNode?.rightChild = removableNode.rightChild
@@ -225,9 +226,11 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 removableNode.parent?.leftChild = replaceNode
             else
                 removableNode.parent?.rightChild = replaceNode
+
+            replaceNode?.parent = removableNode.parent
         }
         if (replaceNode?.color == Color.BLACK) {
-            balanceRemoval(replaceNode)
+            balanceRemoval(removableNode.leftChild)
         }
         return removableNode
     }
