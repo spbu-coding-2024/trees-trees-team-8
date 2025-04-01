@@ -182,6 +182,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 else
                     removableNode.parent?.rightChild = null
             }
+            keys.remove(removableNode.key)
+            values.remove(removableNode.value)
             return removableNode
         }
         //one child
@@ -194,6 +196,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 balanceRemoval(removableNode.rightChild)
             }
 
+            keys.remove(removableNode.key)
+            values.remove(removableNode.value)
             return removableNode
         }
         if (removableNode.rightChild == null) {
@@ -205,6 +209,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
                 balanceRemoval(removableNode.leftChild)
             }
 
+            keys.remove(removableNode.key)
+            values.remove(removableNode.value)
             return removableNode
         }
         //both children
@@ -243,6 +249,8 @@ class RBTree<K : Comparable<K>, V>(rootKey: K, rootValue: V) :
         if (replaceNode?.color == Color.BLACK) {
             balanceRemoval(replaceNodeChild)
         }
+        keys.remove(removableNode.key)
+        values.remove(removableNode.value)
         return removableNode
     }
 }
