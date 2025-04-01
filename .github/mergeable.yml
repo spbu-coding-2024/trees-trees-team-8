@@ -1,0 +1,56 @@
+version: 2
+pull_requests:
+  validate:
+    # Заголовок
+    - title:
+        must_include:
+          regex: '^(feat|fix|docs|chore|test|refactor|ci|build): \[(BST|AVL|RBT)\] .+'
+        message: "PR title must follow: 'type: [Tree] Description' (e.g., 'feat: [AVL] Add rotation')"
+        min_length: 15  # Минимум 15 символов
+        max_length: 72  # Максимум 72 символа (GitHub обрезает до 72)
+    
+    # Тело PR
+    - body:
+        required: true
+        must_include:
+          any:
+            - "Closes #"
+            - "Related to #"
+        message: "Link issues using 'Closes #issue' or 'Related to #issue'"
+        min_length: 50  # Минимум 50 символов
+        sections:       # Обязательные секции
+          - "## Changes"
+          - "## Testing"
+    
+    # Лейблы
+    - labels:
+        required: ["BST", "AVL", "RBT", "bug", "documentation", "dependencies"]
+        message: "Add at least one label (e.g., BST, documentation)"
+    
+    # Коммиты
+    - commits:
+        min: 1
+        max: 10 # Не более 10 коммитов в PR
+        message:
+          regex: '^(feat|fix|docs|chore|test|refactor|ci|build)(\(.*\))?: .+'  # Conventional Commits
+          message: "Commit messages must follow Conventional Commits"
+    
+    # Изменения в коде
+    - files:
+        min: 1 # Минимум 1 изменённый файл
+        allow:
+          - "**.kt" # Только Kotlin-файлы
+          - "**.md" # + Markdown
+        block:
+          - "**.txt" # Запретить изменения в .txt
+    
+    # --- Ревью ---
+    - reviews:
+        min: 1 # Требуется минимум 1 апрув
+        from:
+          - "team-lead" # Только определённые пользователи
+          - "senior-dev"
+
+  block:
+    - conflicts: true # Блокировать при конфликтах
+    - wip: true # Блокировать WIP-коммиты
