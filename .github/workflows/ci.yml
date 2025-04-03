@@ -3,6 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   mergeable-check:
@@ -11,10 +13,23 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Validate PR
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Validate PR using Mergeable
         uses: ridedott/mergeable-action@v2.6.0
         with:
           config-file: .github/mergeable.yml
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up JDK using alias
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build and run tests
+        run: ./gradlew test
