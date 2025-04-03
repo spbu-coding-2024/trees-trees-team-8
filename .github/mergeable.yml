@@ -1,56 +1,48 @@
 version: 2
 pull_requests:
   validate:
-    # Заголовок
+    # Заголовок PR
     - title:
         must_include:
           regex: '^(feat|fix|docs|chore|test|refactor|ci|build): \[(BST|AVL|RBT)\] .+'
         message: "PR title must follow: 'type: [Tree] Description' (e.g., 'feat: [AVL] Add rotation')"
-        min_length: 15  # Минимум 15 символов
-        max_length: 72  # Максимум 72 символа (GitHub обрезает до 72)
-    
+        min_length: 15
+        max_length: 72
+
     # Тело PR
-    - body:
-        required: true
-        must_include:
-          any:
-            - "Closes #"
-            - "Related to #"
-        message: "Link issues using 'Closes #issue' or 'Related to #issue'"
-        min_length: 50  # Минимум 50 символов
-        sections:       # Обязательные секции
-          - "## Changes"
-          - "## Testing"
-    
+  - body:
+      required: true
+      message: "PR must have a description."
+
     # Лейблы
     - labels:
         required: ["BST", "AVL", "RBT", "bug", "documentation", "dependencies"]
         message: "Add at least one label (e.g., BST, documentation)"
-    
+
     # Коммиты
     - commits:
         min: 1
-        max: 10 # Не более 10 коммитов в PR
         message:
-          regex: '^(feat|fix|docs|chore|test|refactor|ci|build)(\(.*\))?: .+'  # Conventional Commits
+          regex: '^(feat|fix|docs|chore|test|refactor|ci|build)(\(.*\))?: .+'
           message: "Commit messages must follow Conventional Commits"
-    
-    # Изменения в коде
+
+    # Файлы
     - files:
-        min: 1 # Минимум 1 изменённый файл
+        min: 1
         allow:
-          - "**.kt" # Только Kotlin-файлы
-          - "**.md" # + Markdown
+          - "**.kt"
+          - "**.md"
         block:
-          - "**.txt" # Запретить изменения в .txt
-    
-    # --- Ревью ---
+          - "**.txt"
+
+    # Ревью
     - reviews:
-        min: 1 # Требуется минимум 1 апрув
+        min: 1
         from:
-          - "team-lead" # Только определённые пользователи
-          - "senior-dev"
+          - "NikolaiKl"
+          - "lev666"
+          - "ivanovm-main"
 
   block:
-    - conflicts: true # Блокировать при конфликтах
-    - wip: true # Блокировать WIP-коммиты
+    - conflicts: true
+    - wip: true
