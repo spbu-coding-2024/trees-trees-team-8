@@ -12,7 +12,7 @@ mergeable:
           message: "PR description must not be empty."
       - do: label
         must_include:
-          regex: "\\b(BST|AVL|RBT|bug|documentation|dependencies)\\b"
+          regex: "\\b(BST|AVL|RBT|bug|documentation|dependencies|Infra)\\b"
           message: "PR must include at least one valid label."
       - do: commit
         message:
