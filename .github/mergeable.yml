@@ -4,7 +4,7 @@ mergeable:
     validate:
       - do: title
         must_include:
-          regex: "^(feat|fix|docs|chore|test|refactor|ci|build): \\[(BST|AVL|RBT)\\] .+"
+          regex: "^(feat|fix|docs|chore|test|refactor|ci|build): \\[(BST|AVL|RBT|Infra)\\] .+"
           message: "PR title must be in the format: type: [tag] description (e.g., feat: [AVL] Add feature)."
       - do: description
         no_empty:
