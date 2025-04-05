@@ -1,0 +1,23 @@
+version: 2
+mergeable:
+  - when: pull_request.*
+    validate:
+      - do: title
+        must_include:
+          regex: "^(feat|fix|docs|chore|test|refactor|ci|build): \\[(BST|AVL|RBT|Infra)\\] .+"
+          message: "PR title must be in the format: type: [tag] description (e.g., feat: [AVL] Add feature)."
+      - do: description
+        no_empty:
+          enabled: true
+          message: "PR description must not be empty."
+      - do: label
+        must_include:
+          regex: "\\b(BST|AVL|RBT|bug|documentation|dependencies|Infra)\\b"
+          message: "PR must include at least one valid label."
+      - do: commit
+        message:
+          regex: "^(feat|fix|docs|chore|test|refactor|ci|build)(\\(.*\\))?: .+"
+          message: "Commit messages must follow conventional format (e.g., feat: or fix(scope):)."
+    block:
+      - conflicts: true
+      - wip: true
