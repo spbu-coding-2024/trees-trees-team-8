@@ -4,16 +4,12 @@ mergeable:
     validate:
       - do: title
         must_include:
-          regex: "^(feat|fix|docs|chore|test|refactor|ci|build): \\[(BST|AVL|RBT|Infra)\\] .+"
-          message: "PR title must be in the format: type: [tag] description (e.g., feat: [AVL] Add feature)."
+          regex: "^[A-Z].*"
+          message: "PR title must start with a capital letter."
       - do: description
         no_empty:
           enabled: true
           message: "PR description must not be empty."
-      - do: label
-        must_include:
-          regex: "\\b(BST|AVL|RBT|bug|documentation|dependencies|Infra)\\b"
-          message: "PR must include at least one valid label."
       - do: commit
         message:
           regex: "^(feat|fix|docs|chore|test|refactor|ci|build)(\\(.*\\))?: .+"
