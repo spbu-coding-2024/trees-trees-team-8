@@ -6,8 +6,8 @@
 
 ## Overview
 
-While many tree implementations exist, we have not found any libraries that provide a unified interface for BST, AVL, and Red-Black Trees with a focus on educational clarity and production readiness. This project aims to fill this gap. It includes three types of triage:
-- **BST (Binary Search Tree):** A basic binary search tree without self-balancing.
+This kotlin-library implements such trees:
+- **Binary Search Tree:** A basic binary search tree without self-balancing.
 - **AVL Tree:** A self-balancing tree using height-based rotations.
 - **Red-Black Tree:** A self-balancing tree enforcing color properties.
 
@@ -16,14 +16,14 @@ Each implementation offers core operations such as `insert`, `delete`, and `sear
 ---
 
 ## Table of Contents
-- [Installation](#installation)
+- [Build](#build)
 - [Testing](#testing)
 - [Team](#team)
 - [License](#license)
 
 ---
 
-## Installation
+## Build
 #### Clone the repository and build the project:
 
 ```bash
@@ -39,22 +39,14 @@ cd trees-trees-team-8
 #### Run tests using Gradle:
 ```bash
 ./gradlew test
-```  
-
-> [!IMPORTANT]
->
-> Test reports are generated at:
->
-> ```swift
-> lib/build/reports/tests/test/index.html
-
+```
 
 ## Team
 
 
-- [@Nikolai Klevakin](https://github.com/NIcolaiKl) – Project graphics, Presentation.
-- [@Lev Beyzer](https://github.com/lev666) – AVL Tree implementation, BST.
-- [@Mikhail Ivanov](https://github.com/ivanovm-main) – Red-Black Tree logic, Core architecture, BST.
+- [@NIcolaiKl](https://github.com/NIcolaiKl) – BS Tree implementation.
+- [@lev666](https://github.com/lev666) – AVL Tree implementation, Core architecture methods.
+- [@ivanovm-main](https://github.com/ivanovm-main) – RB Tree implementation, Core architecture.
 
 
 ---
