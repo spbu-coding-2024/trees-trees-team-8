@@ -6,8 +6,8 @@
 
 ## Overview
 
-This project includes three types of sorting:
-- **BST (Binary Search Tree):** A basic binary search tree without self-balancing.
+This kotlin-library implements such trees:
+- **Binary Search Tree:** A basic binary search tree without self-balancing.
 - **AVL Tree:** A self-balancing tree using height-based rotations.
 - **Red-Black Tree:** A self-balancing tree enforcing color properties.
 
