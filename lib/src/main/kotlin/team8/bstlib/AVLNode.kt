@@ -1,14 +1,12 @@
 package team8.bstlib
 
-class AVLNode<K : Comparable<K>, V>(key: K, value: V) : BinarySearchTreeNode<K, V, AVLNode<K, V>>(key, value) {
+internal class AVLNode<K : Comparable<K>, V>(key: K, value: V) : BinarySearchTreeNode<K, V, AVLNode<K, V>>(key, value) {
+    private var nodeHeight = 1
+    internal var nodeValue = value
 
-    var nodeHeight: Int = 1
-
-    fun updateHeight() {
-        val left = leftChild?.nodeHeight ?: 0
-        val right = rightChild?.nodeHeight ?: 0
-        nodeHeight = maxOf(left, right) + 1
+    internal fun updateHeight() {
+        nodeHeight = maxOf(leftChild?.nodeHeight ?: 0, rightChild?.nodeHeight ?: 0) + 1
     }
 
-    fun balanceFactor() = (leftChild?.nodeHeight ?: 0) - (rightChild?.nodeHeight ?: 0)
+    internal fun balanceFactor() = (leftChild?.nodeHeight ?: 0) - (rightChild?.nodeHeight ?: 0)
 }
