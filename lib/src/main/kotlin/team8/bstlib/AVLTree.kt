@@ -4,8 +4,8 @@ class AVLTree<K : Comparable<K>, V> : Iterable<Pair<K, V>> {
     internal var root: AVLNode<K, V>? = null
     private var size = 0
 
-    fun insert(key: K, value: V): Boolean {
-        val (newRoot, inserted) = insertRecursive(root, key, value)
+    fun insert(key: K, nodeValue: V): Boolean {
+        val (newRoot, inserted) = insertRecursive(root, key, nodeValue)
         root = newRoot
         if (inserted) size++
         return inserted
@@ -25,7 +25,7 @@ class AVLTree<K : Comparable<K>, V> : Iterable<Pair<K, V>> {
                 updateAndBalance(node) to inserted
             }
             else -> {
-                node.value = value
+                node.nodeValue = value
                 node to false
             }
         }
@@ -132,7 +132,7 @@ class AVLTree<K : Comparable<K>, V> : Iterable<Pair<K, V>> {
             current = when {
                 key < current.key -> current.leftChild
                 key > current.key -> current.rightChild
-                else -> return current.value
+                else -> return current.nodeValue
             }
         }
         return null
@@ -163,7 +163,7 @@ class AVLTree<K : Comparable<K>, V> : Iterable<Pair<K, V>> {
             if (!hasNext()) throw NoSuchElementException()
             val node = stack.removeLast()
             pushLeft(node.rightChild)
-            return node.key to node.value
+            return node.key to node.nodeValue
         }
     }
 
