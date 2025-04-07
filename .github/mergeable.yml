@@ -1,0 +1,20 @@
+version: 2
+mergeable:
+  - when: pull_request.*
+    validate:
+      - do: title
+        must_include:
+          regex: "^[A-Z].*"
+          message: "PR title must start with a capital letter."
+      - do: description
+        no_empty:
+          enabled: true
+          message: "PR description must not be empty."
+      - do: commit
+        message:
+          regex: "^(feat|fix|docs|chore|test|refactor|ci|build)(\\(.*\\))?: .+"
+          message: "Commit messages must follow conventional format (e.g., feat: or fix(scope):)."
+          skip_merge: true
+    block:
+      - conflicts: true
+      - wip: true
