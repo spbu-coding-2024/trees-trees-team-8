@@ -1,5 +1,5 @@
 [versions]
-junit-jupiter = "5.11.3"
+junit-jupiter = "6.0.2"
 kotlin-test = "2.1.0"
 
 [libraries]
